@@ -2,6 +2,7 @@ package capgemini.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class CustomerEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String email;
     @Column(nullable = false)
-    private Date birthDate;
+    private Timestamp birthDate;
     @Column(nullable = false)
     private Long cardNumber;
     @Column(nullable = false)
@@ -65,7 +66,7 @@ public class CustomerEntity implements Serializable {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(Timestamp birthDate) {
         this.birthDate = birthDate;
     }
 
