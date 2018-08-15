@@ -23,8 +23,6 @@ public class CarMapper {
                 .withHorsePower(carEntity.getHorsePower())
                 .withMileage(carEntity.getMileage())
                 .withCarType(carEntity.getCarType())
-				.withEmployeeTo(EmployeeMapper.toEmployeeTo(carEntity.getEmployeeEntity()))
-				.withHistoryTos(HistoryMapper.toHistoryTos(carEntity.getRentedCars()))
                 .build();
     }
 
@@ -42,8 +40,6 @@ public class CarMapper {
 		carEntity.setHorsePower(carTo.getHorsePower());
 		carEntity.setMileage(carTo.getMileage());
 		carEntity.setCarType(carTo.getCarType());
-		carEntity.setEmployeeEntity(EmployeeMapper.toEmployeeEntity(carTo.getEmployeeTo()));
-		carEntity.setRentedCars(HistoryMapper.toHistoryEntities(carTo.getHistoryTos()));
 
 		return carEntity;
 	}

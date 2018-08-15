@@ -6,8 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Year;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -35,9 +33,4 @@ public class CarEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String carType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private EmployeeEntity employeeEntity;
-
-    @OneToMany(targetEntity = HistoryEntity.class, mappedBy = "carEntity", cascade = CascadeType.ALL)
-    private Set<HistoryEntity> rentedCars = new HashSet<>();
 }

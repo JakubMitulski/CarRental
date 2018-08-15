@@ -1,8 +1,13 @@
 package capgemini.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "ADDRESSES")
 public class AddressEntity implements Serializable {
@@ -10,50 +15,11 @@ public class AddressEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 20)
     private String city;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 20)
     private String street;
-    @Column(nullable = false, length = 50)
-    private String postalcode;
+    @Column(nullable = false, length = 10)
+    private String postcode;
 
-    @OneToOne(mappedBy = "addressEntity")
-    private CustomerEntity customerEntity;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getPostalcode() {
-        return postalcode;
-    }
-
-    public void setPostalcode(String postalcode) {
-        this.postalcode = postalcode;
-    }
-
-    public CustomerEntity getCustomerEntity() {
-        return customerEntity;
-    }
-
-    public void setCustomerEntity(CustomerEntity customerEntity) {
-        this.customerEntity = customerEntity;
-    }
 }

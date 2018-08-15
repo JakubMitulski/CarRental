@@ -1,8 +1,13 @@
 package capgemini.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "POSITIONS")
 public class PositionEntity implements Serializable {
@@ -13,27 +18,4 @@ public class PositionEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private EmployeeEntity employeeEntity;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public EmployeeEntity getEmployeeEntity() {
-        return employeeEntity;
-    }
-
-    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
-        this.employeeEntity = employeeEntity;
-    }
 }

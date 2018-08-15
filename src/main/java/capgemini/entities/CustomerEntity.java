@@ -1,12 +1,14 @@
 package capgemini.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "CUSTOMERS")
 public class CustomerEntity implements Serializable {
@@ -27,78 +29,8 @@ public class CustomerEntity implements Serializable {
     @Column(nullable = false)
     private Long phone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ADDRESS_ID")
     private AddressEntity addressEntity;
 
-    @OneToMany(targetEntity = HistoryEntity.class, mappedBy = "customerEntity", cascade = CascadeType.ALL)
-    private Set<HistoryEntity> rentalCustomers = new HashSet<>();
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Timestamp birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Long getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(Long cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public Long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Long phone) {
-        this.phone = phone;
-    }
-
-    public AddressEntity getAddres() {
-        return addressEntity;
-    }
-
-    public void setAddres(AddressEntity addres) {
-        this.addressEntity = addres;
-    }
-
-    public Set<HistoryEntity> getRentalCustomers() {
-        return rentalCustomers;
-    }
-
-    public void setRentalCustomers(Set<HistoryEntity> rentalCustomers) {
-        this.rentalCustomers = rentalCustomers;
-    }
 }

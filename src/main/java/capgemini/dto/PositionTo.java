@@ -1,4 +1,4 @@
 package capgemini.dto;
 
-public class HistoryTo {
+public class PositionTo {
 }

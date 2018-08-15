@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Year;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -19,15 +18,12 @@ public class CarTo {
     private Integer horsePower;
     private Integer mileage;
     private String carType;
-    private EmployeeTo employeeTo;
-    private Set<HistoryTo> historyTos;
 
     public CarTo() {
     }
 
     public CarTo(Long id, String brand, String model, String color, Year productionYear,
-                 Integer engineCapacity, Integer horsePower, Integer mileage, String carType,
-                 EmployeeTo employeeTo, Set<HistoryTo> historyTos) {
+                 Integer engineCapacity, Integer horsePower, Integer mileage, String carType) {
         super();
         this.id = id;
         this.brand = brand;
@@ -38,8 +34,6 @@ public class CarTo {
         this.horsePower = horsePower;
         this.mileage = mileage;
         this.carType = carType;
-        this.employeeTo = employeeTo;
-        this.historyTos = historyTos;
     }
 
 
@@ -58,8 +52,6 @@ public class CarTo {
         private Integer horsePower;
         private Integer mileage;
         private String carType;
-        private EmployeeTo employeeTo;
-        private Set<HistoryTo> rentedCars;
 
         public CarToBuilder() {
             super();
@@ -110,35 +102,23 @@ public class CarTo {
             return this;
         }
 
-        public CarToBuilder withEmployeeTo(EmployeeTo employeeTo) {
-            this.employeeTo = employeeTo;
-            return this;
-        }
-
-        public CarToBuilder withHistoryTos(Set<HistoryTo> historyTos) {
-            this.rentedCars = historyTos;
-            return this;
-        }
-
         public CarTo build() {
             checkBeforeBuild(brand, model, color, productionYear, engineCapacity,
-                    horsePower, mileage, carType, employeeTo, rentedCars);
+                    horsePower, mileage, carType);
             return new CarTo(id, brand, model, color, productionYear, engineCapacity,
-                    horsePower, mileage, carType, employeeTo, rentedCars);
+                    horsePower, mileage, carType);
         }
 
         private void checkBeforeBuild(String brand, String model, String color, Year productionYear,
                                       Integer engineCapacity, Integer horsePower, Integer mileage,
-                                      String carType, EmployeeTo employeeTo, Set<HistoryTo> historyTos) {
+                                      String carType) {
             if (brand == null || brand.isEmpty() ||
                     model == null || model.isEmpty() ||
                     color == null || color.isEmpty() ||
                     productionYear == null ||
                     horsePower == null ||
                     mileage == null ||
-                    carType == null || carType.isEmpty() ||
-                    employeeTo == null ||
-                    historyTos == null) {
+                    carType == null || carType.isEmpty()) {
                 throw new RuntimeException("Incorrect car_to be created");
             }
         }
