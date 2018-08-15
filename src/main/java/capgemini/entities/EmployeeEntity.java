@@ -25,23 +25,26 @@ public class EmployeeEntity implements Serializable {
     @Column(nullable = false)
     private Date birthDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ADDRESS_ID")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POSITION_ID")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
     private PositionEntity positionEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DEPARTMENT_ID")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
     private DepartmentEntity departmentEntity;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "RESPONSIBILITIES",
-            joinColumns = {@JoinColumn(name = "EMPLOYEE_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "CAR_ID", nullable = false, updatable = false)}
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "employees_cars",
+            joinColumns = {@JoinColumn(name = "employee", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "car", nullable = false, updatable = false)}
     )
     private Set<CarEntity> cars = new HashSet<>();
 
+    public void addCar(CarEntity carEntity) {
+        this.cars.add(carEntity);
+    }
 }

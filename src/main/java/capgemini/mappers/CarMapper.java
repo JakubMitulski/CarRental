@@ -4,6 +4,7 @@ import capgemini.dto.CarTo;
 import capgemini.entities.CarEntity;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -44,12 +45,12 @@ public class CarMapper {
 		return carEntity;
 	}
 
-	public static List<CarTo> map2Tos(List<CarEntity> carEntities) {
-		return carEntities.stream().map(CarMapper::toCarTo).collect(Collectors.toList());
+	public static Set<CarTo> map2Tos(Set<CarEntity> carEntities) {
+		return carEntities.stream().map(CarMapper::toCarTo).collect(Collectors.toSet());
 	}
 
-	public static List<CarEntity> map2Entities(List<CarTo> carTos) {
-		return carTos.stream().map(CarMapper::toCarEntity).collect(Collectors.toList());
+	public static Set<CarEntity> map2Entities(Set<CarTo> carTos) {
+		return carTos.stream().map(CarMapper::toCarEntity).collect(Collectors.toSet());
 	}
 
 }

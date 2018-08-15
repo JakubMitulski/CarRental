@@ -1,8 +1,7 @@
 package capgemini.service;
 
 import capgemini.dto.CarTo;
-
-import java.util.List;
+import capgemini.dto.EmployeeTo;
 
 public interface CarService {
 
@@ -12,7 +11,7 @@ public interface CarService {
 
     CarTo updateCar(CarTo carTo);
 
-    List<CarTo> findCarsByEmployee(Long employeeId);
-
     CarTo findCarById(Long id);
+
+    void addCarToEmployeeResponsibility(CarTo carTo, EmployeeTo employeeTo);
 }

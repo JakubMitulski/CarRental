@@ -1,5 +1,6 @@
 package capgemini.dto;
 
+import capgemini.entities.PositionEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,23 +17,23 @@ public class EmployeeTo {
     private String lastName;
     private Date birthDate;
     private AddressTo addressTo;
-    private Set<PositionTo> positionTos = new HashSet<>();
-    private Set<DepartmentTo> departmentTos = new HashSet<>();
+    private PositionTo positionTo;
+    private DepartmentTo departmentTo;
     private Set<CarTo> carTos = new HashSet<>();
 
     public EmployeeTo() {
     }
 
     public EmployeeTo(Long id, String firstName, String lastName, Date birthDate, AddressTo addressTo,
-                      Set<PositionTo> positionTos, Set<DepartmentTo> departmentTos, Set<CarTo> carTos) {
+                      PositionTo positionTo, DepartmentTo departmentTo, Set<CarTo> carTos) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.addressTo = addressTo;
-        this.positionTos = positionTos;
-        this.departmentTos = departmentTos;
+        this.positionTo = positionTo;
+        this.departmentTo = departmentTo;
         this.carTos = carTos;
     }
 
@@ -47,8 +48,8 @@ public class EmployeeTo {
         private String lastName;
         private Date birthDate;
         private AddressTo addressTo;
-        private Set<PositionTo> positionTos = new HashSet<>();
-        private Set<DepartmentTo> departmentTos = new HashSet<>();
+        private PositionTo positionTo;
+        private DepartmentTo departmentTo;
         private Set<CarTo> carTos = new HashSet<>();
 
         public EmployeeToBuilder() {
@@ -80,13 +81,13 @@ public class EmployeeTo {
             return this;
         }
 
-        public EmployeeToBuilder withPositionTos(Set<PositionTo> positionTos) {
-            this.positionTos = positionTos;
+        public EmployeeToBuilder withPositionTo(PositionTo positionTo) {
+            this.positionTo = positionTo;
             return this;
         }
 
-        public EmployeeToBuilder withDepartmentTos(Set<DepartmentTo> departmentTos) {
-            this.departmentTos = departmentTos;
+        public EmployeeToBuilder withDepartmentTo(DepartmentTo departmentTo) {
+            this.departmentTo = departmentTo;
             return this;
         }
 
@@ -96,19 +97,19 @@ public class EmployeeTo {
         }
 
         public EmployeeTo build() {
-            checkBeforeBuild(firstName, lastName, birthDate, addressTo, positionTos, departmentTos, carTos);
-            return new EmployeeTo(id, firstName, lastName, birthDate, addressTo, positionTos, departmentTos, carTos);
+            checkBeforeBuild(firstName, lastName, birthDate, addressTo, positionTo, departmentTo, carTos);
+            return new EmployeeTo(id, firstName, lastName, birthDate, addressTo, positionTo, departmentTo, carTos);
         }
 
         private void checkBeforeBuild(String firstName, String lastName, Date birthDate, AddressTo addressTo,
-                                      Set<PositionTo> positionTos, Set<DepartmentTo> departmentTos,
+                                      PositionTo positionTo, DepartmentTo departmentTo,
                                       Set<CarTo> carTos) {
             if (firstName == null || firstName.isEmpty() ||
                     lastName == null || lastName.isEmpty() ||
                     birthDate == null ||
                     addressTo == null ||
-                    positionTos == null ||
-                    departmentTos == null ||
+                    positionTo == null ||
+                    departmentTo == null ||
                     carTos == null) {
                 throw new RuntimeException("Incorrect employee_to be created");
             }

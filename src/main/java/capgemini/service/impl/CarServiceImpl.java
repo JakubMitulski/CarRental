@@ -2,14 +2,14 @@ package capgemini.service.impl;
 
 import capgemini.dao.CarDao;
 import capgemini.dto.CarTo;
+import capgemini.dto.EmployeeTo;
 import capgemini.entities.CarEntity;
 import capgemini.mappers.CarMapper;
+import capgemini.mappers.EmployeeMapper;
 import capgemini.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -42,8 +42,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarTo> findCarsByEmployee(Long employeeId) {
-        List<CarEntity> cars = carRepository.findCarsByEmployee(employeeId);
-        return CarMapper.map2Tos(cars);
+    public void addCarToEmployeeResponsibility(CarTo carTo, EmployeeTo employeeTo) {
+        carRepository.addCarToEmployee(CarMapper.toCarEntity(carTo), EmployeeMapper.toEmployeeEntity(employeeTo));
     }
 }
