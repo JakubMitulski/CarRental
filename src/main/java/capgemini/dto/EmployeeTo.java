@@ -1,6 +1,5 @@
 package capgemini.dto;
 
-import capgemini.entities.PositionEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -109,7 +108,6 @@ public class EmployeeTo {
                     birthDate == null ||
                     addressTo == null ||
                     positionTo == null ||
-                    departmentTo == null ||
                     carTos == null) {
                 throw new RuntimeException("Incorrect employee_to be created");
             }

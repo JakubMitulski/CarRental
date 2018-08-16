@@ -43,12 +43,12 @@ public class EmployeeMapper {
         return employeeEntity;
     }
 
-    public static Set<EmployeeTo> map2Tos(Set<EmployeeEntity> employeeEntities) {
-        return employeeEntities.stream().map(EmployeeMapper::toEmployeeTo).collect(Collectors.toSet());
+    public static List<EmployeeTo> map2Tos(List<EmployeeEntity> employeeEntities) {
+        return employeeEntities.stream().map(EmployeeMapper::toEmployeeTo).collect(Collectors.toList());
     }
 
-    public static Set<EmployeeEntity> map2Entities(Set<EmployeeTo> employeeTos) {
-        return employeeTos.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toSet());
+    public static List<EmployeeEntity> map2Entities(List<EmployeeTo> employeeTos) {
+        return employeeTos.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toList());
     }
 
 }

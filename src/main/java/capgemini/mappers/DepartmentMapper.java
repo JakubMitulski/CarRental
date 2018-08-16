@@ -1,13 +1,10 @@
 package capgemini.mappers;
 
-import capgemini.dto.AddressTo;
 import capgemini.dto.DepartmentTo;
-import capgemini.entities.AddressEntity;
 import capgemini.entities.DepartmentEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 public class DepartmentMapper {
 
@@ -43,5 +40,4 @@ public class DepartmentMapper {
     public static List<DepartmentEntity> map2Entities(List<DepartmentTo> departmentTos) {
         return departmentTos.stream().map(DepartmentMapper::toDepartmentEntity).collect(Collectors.toList());
     }
-
 }

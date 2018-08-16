@@ -37,5 +37,4 @@ public class PositionMapper {
     public static List<PositionEntity> map2Entities(List<PositionTo> positionTos) {
         return positionTos.stream().map(PositionMapper::toPositionEntity).collect(Collectors.toList());
     }
-
 }

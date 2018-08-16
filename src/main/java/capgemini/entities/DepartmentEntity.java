@@ -23,5 +23,4 @@ public class DepartmentEntity implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ADDRESS_ID")
     private AddressEntity address;
-
 }

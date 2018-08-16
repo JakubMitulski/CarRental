@@ -1,7 +1,6 @@
 package capgemini.service;
 
 import capgemini.dto.*;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,10 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.util.DateUtil.now;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -68,7 +67,7 @@ public class CarServiceTest {
         CarTo testCar = carService.addNewCar(carTo);
 
         //When
-        carService.deleteCar(testCar.getId());
+        carService.deleteCar(testCar);
 
         //Then
         assertNull(carService.findCarById(testCar.getId()));
@@ -149,7 +148,6 @@ public class CarServiceTest {
         ArrayList<CarTo> carTosList = new ArrayList<>(carTos);
         assertEquals(1, carTos.size());
         assertEquals("mazda", carTosList.get(0).getBrand());
-
     }
 
     @Test
@@ -250,7 +248,6 @@ public class CarServiceTest {
 
         //Then
         Set<CarTo> carsByEmployee = carService.findCarsByEmployee(testEmployee);
-
         assertEquals(2, carsByEmployee.size());
     }
 }

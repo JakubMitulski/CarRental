@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {

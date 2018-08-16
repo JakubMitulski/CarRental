@@ -9,7 +9,7 @@ public interface CarService {
 
     CarTo addNewCar(CarTo carTo);
 
-    void deleteCar(Long carId);
+    void deleteCar(CarTo carTo);
 
     CarTo updateCar(CarTo carTo);
 

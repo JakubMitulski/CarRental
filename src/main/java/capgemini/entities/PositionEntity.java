@@ -17,5 +17,4 @@ public class PositionEntity implements Serializable {
     private Long id;
     @Column(nullable = false, length = 50)
     private String name;
-
 }

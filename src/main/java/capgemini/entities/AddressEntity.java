@@ -21,5 +21,4 @@ public class AddressEntity implements Serializable {
     private String street;
     @Column(nullable = false, length = 10)
     private String postcode;
-
 }

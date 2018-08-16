@@ -32,5 +32,4 @@ public class CarEntity implements Serializable {
     private Integer mileage;
     @Column(nullable = false, length = 50)
     private String carType;
-
 }

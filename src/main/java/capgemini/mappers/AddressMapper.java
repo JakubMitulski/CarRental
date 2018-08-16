@@ -6,7 +6,6 @@ import capgemini.entities.AddressEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class AddressMapper {
 
     public static AddressTo toAddressTo(AddressEntity addressEntity) {
@@ -41,5 +40,4 @@ public class AddressMapper {
     public static List<AddressEntity> map2Entities(List<AddressTo> addressTos) {
         return addressTos.stream().map(AddressMapper::toAddressEntity).collect(Collectors.toList());
     }
-
 }
