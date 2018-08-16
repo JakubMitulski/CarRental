@@ -4,6 +4,7 @@ import capgemini.dto.EmployeeTo;
 import capgemini.entities.EmployeeEntity;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -42,12 +43,12 @@ public class EmployeeMapper {
         return employeeEntity;
     }
 
-    public static List<EmployeeTo> map2Tos(List<EmployeeEntity> employeeEntities) {
-        return employeeEntities.stream().map(EmployeeMapper::toEmployeeTo).collect(Collectors.toList());
+    public static Set<EmployeeTo> map2Tos(Set<EmployeeEntity> employeeEntities) {
+        return employeeEntities.stream().map(EmployeeMapper::toEmployeeTo).collect(Collectors.toSet());
     }
 
-    public static List<EmployeeEntity> map2Entities(List<EmployeeTo> employeeTos) {
-        return employeeTos.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toList());
+    public static Set<EmployeeEntity> map2Entities(Set<EmployeeTo> employeeTos) {
+        return employeeTos.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toSet());
     }
 
 }

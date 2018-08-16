@@ -1,6 +1,7 @@
 package capgemini.service;
 
 import capgemini.dto.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +68,10 @@ public class CarServiceTest {
         CarTo testCar = carService.addNewCar(carTo);
 
         //When
-        carService.deleteCar(1L);
+        carService.deleteCar(testCar.getId());
 
         //Then
-        assertNull(carService.findCarById(1L));
+        assertNull(carService.findCarById(testCar.getId()));
     }
 
     @Test
@@ -151,4 +152,105 @@ public class CarServiceTest {
 
     }
 
+    @Test
+    @Transactional
+    public void shouldFindCarByBrandAndModel() {
+        //Given
+        CarTo carTo1 = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar1 = carService.addNewCar(carTo1);
+
+        CarTo carTo2 = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("3")
+                .withColor("rocketred")
+                .withProductionYear(Year.parse("2018"))
+                .withEngineCapacity(2000)
+                .withHorsePower(160)
+                .withMileage(5000)
+                .withCarType("hatch")
+                .build();
+        CarTo testCar2 = carService.addNewCar(carTo2);
+
+        //When
+        CarTo carByBrandAndModel = carService.findCarByBrandAndModel(testCar2);
+
+        //Then
+        assertEquals("3", carByBrandAndModel.getModel());
+        assertEquals("rocketred", carByBrandAndModel.getColor());
+    }
+
+
+    @Test
+    @Transactional
+    public void shouldFindCarsByEmployee() {
+        //Given
+        CarTo carTo1 = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar1 = carService.addNewCar(carTo1);
+
+        CarTo carTo2 = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("3")
+                .withColor("rocketred")
+                .withProductionYear(Year.parse("2018"))
+                .withEngineCapacity(2000)
+                .withHorsePower(160)
+                .withMileage(5000)
+                .withCarType("hatch")
+                .build();
+        CarTo testCar2 = carService.addNewCar(carTo2);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("TestCity")
+                .withStreet("TestStreet")
+                .withPostcode("TestCode")
+                .build();
+
+        PositionTo positionTo = new PositionTo.PositionToBuilder()
+                .withName("TestPosition")
+                .build();
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestName")
+                .withPhone(777777777L)
+                .withAddressTo(addressTo)
+                .build();
+
+        EmployeeTo employeeTo = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test")
+                .withLastName("Test")
+                .withBirthDate(now())
+                .withAddressTo(addressTo)
+                .withPositionTo(positionTo)
+                .withDepartmentTo(departmentTo)
+                .withCarTos(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee = employeeService.addNewEmployee(employeeTo);
+
+        //When
+        carService.addCarToEmployeeResponsibility(testCar1, testEmployee);
+        carService.addCarToEmployeeResponsibility(testCar2, testEmployee);
+
+        //Then
+        Set<CarTo> carsByEmployee = carService.findCarsByEmployee(testEmployee);
+
+        assertEquals(2, carsByEmployee.size());
+    }
 }

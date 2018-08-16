@@ -4,12 +4,17 @@ import capgemini.dao.CarDao;
 import capgemini.dto.CarTo;
 import capgemini.dto.EmployeeTo;
 import capgemini.entities.CarEntity;
+import capgemini.entities.EmployeeEntity;
 import capgemini.mappers.CarMapper;
 import capgemini.mappers.EmployeeMapper;
 import capgemini.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -44,5 +49,18 @@ public class CarServiceImpl implements CarService {
     @Override
     public void addCarToEmployeeResponsibility(CarTo carTo, EmployeeTo employeeTo) {
         carRepository.addCarToEmployee(CarMapper.toCarEntity(carTo), EmployeeMapper.toEmployeeEntity(employeeTo));
+    }
+
+    @Override
+    public CarTo findCarByBrandAndModel(CarTo carTo) {
+        CarEntity carByBrandAndModel = carRepository.findCarByBrandAndModel(CarMapper.toCarEntity(carTo));
+        return CarMapper.toCarTo(carByBrandAndModel);
+    }
+
+    @Override
+    public Set<CarTo> findCarsByEmployee(EmployeeTo employeeTo) {
+        List<CarEntity> carsByEmployee = carRepository.findCarsByEmployee(EmployeeMapper.toEmployeeEntity(employeeTo));
+        Set<CarEntity> resultSet = new HashSet<>(carsByEmployee);
+        return CarMapper.map2Tos(resultSet);
     }
 }
