@@ -1,27 +1,21 @@
 package capgemini.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressTo {
 
     private Long id;
     private String city;
     private String street;
     private String postcode;
-
-    public AddressTo() {
-    }
-
-    public AddressTo(Long id, String city, String street, String postcode) {
-        super();
-        this.id = id;
-        this.city = city;
-        this.street = street;
-        this.postcode = postcode;
-    }
 
     public static AddressToBuilder builder() {
         return new AddressToBuilder();

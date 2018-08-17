@@ -17,7 +17,7 @@ import static org.assertj.core.util.DateUtil.now;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class EmployeeServiceTest {
 
     @Autowired

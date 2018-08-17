@@ -1,23 +1,18 @@
 package capgemini.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PositionTo {
 
     private Long id;
     private String name;
-
-    public PositionTo() {
-    }
-
-    public PositionTo(Long id, String name) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
 
     public static PositionToBuilder builder() {
         return new PositionToBuilder();

@@ -1,27 +1,20 @@
 package capgemini.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DepartmentTo {
 
     private Long id;
     private String name;
     private Long phone;
     private AddressTo addressTo;
-
-    public DepartmentTo() {
-    }
-
-    public DepartmentTo(Long id, String name, Long phone, AddressTo addressTo) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.addressTo = addressTo;
-    }
 
     public static DepartmentToBuilder builder() {
         return new DepartmentToBuilder();

@@ -1,6 +1,8 @@
 package capgemini.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeTo {
 
     private Long id;
@@ -19,22 +23,6 @@ public class EmployeeTo {
     private PositionTo positionTo;
     private DepartmentTo departmentTo;
     private Set<CarTo> carTos = new HashSet<>();
-
-    public EmployeeTo() {
-    }
-
-    public EmployeeTo(Long id, String firstName, String lastName, Date birthDate, AddressTo addressTo,
-                      PositionTo positionTo, DepartmentTo departmentTo, Set<CarTo> carTos) {
-        super();
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.addressTo = addressTo;
-        this.positionTo = positionTo;
-        this.departmentTo = departmentTo;
-        this.carTos = carTos;
-    }
 
     public static EmployeeToBuilder builder() {
         return new EmployeeToBuilder();

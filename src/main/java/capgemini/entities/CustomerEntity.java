@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class CustomerEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String email;
     @Column(nullable = false)
-    private Timestamp birthDate;
+    private Date birthDate;
     @Column(nullable = false)
     private Long cardNumber;
     @Column(nullable = false)

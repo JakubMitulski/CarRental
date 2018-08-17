@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Year;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -32,4 +33,7 @@ public class CarEntity implements Serializable {
     private Integer mileage;
     @Column(nullable = false, length = 50)
     private String carType;
+
+    @OneToMany(mappedBy = "carEntity", cascade = CascadeType.REMOVE)
+    private Collection<HistoryEntity> historyEntities;
 }

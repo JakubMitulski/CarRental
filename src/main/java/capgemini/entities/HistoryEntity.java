@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,12 +19,11 @@ public class HistoryEntity implements Serializable {
     @Column(nullable = false)
     private Integer price;
     @Column(nullable = false)
-    private Timestamp rentalDate;
+    private Date rentalDate;
     @Column(nullable = false)
-    private Timestamp returnDate;
+    private Date returnDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cars_id", nullable = false)
+    @ManyToOne
     private CarEntity carEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,6 +35,6 @@ public class HistoryEntity implements Serializable {
     private DepartmentEntity rentalDepartmentEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "returnDepartments_id", nullable = false)
+    @JoinColumn(name = "returnDepartments_id")
     private DepartmentEntity returnDepartmentEntity;
 }

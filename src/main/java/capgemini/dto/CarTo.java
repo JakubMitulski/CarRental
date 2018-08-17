@@ -1,12 +1,16 @@
 package capgemini.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Year;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarTo {
 
     private Long id;
@@ -18,24 +22,6 @@ public class CarTo {
     private Integer horsePower;
     private Integer mileage;
     private String carType;
-
-    public CarTo() {
-    }
-
-    public CarTo(Long id, String brand, String model, String color, Year productionYear,
-                 Integer engineCapacity, Integer horsePower, Integer mileage, String carType) {
-        super();
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.color = color;
-        this.productionYear = productionYear;
-        this.engineCapacity = engineCapacity;
-        this.horsePower = horsePower;
-        this.mileage = mileage;
-        this.carType = carType;
-    }
-
 
     public static CarToBuilder builder() {
         return new CarToBuilder();
