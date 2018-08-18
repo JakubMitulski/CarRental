@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Year;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -17,11 +18,11 @@ public class CarEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String brand;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String model;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String color;
     @Column(nullable = false)
     private Year productionYear;
@@ -31,9 +32,13 @@ public class CarEntity implements Serializable {
     private Integer horsePower;
     @Column(nullable = false)
     private Integer mileage;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String carType;
 
     @OneToMany(mappedBy = "carEntity", cascade = CascadeType.REMOVE)
-    private Collection<HistoryEntity> historyEntities;
+    private Collection<HistoryEntity> historyEntities = new HashSet<>();
+
+    public void addHistoryEntry(HistoryEntity historyEntity){
+        this.historyEntities.add(historyEntity);
+    }
 }

@@ -15,10 +15,10 @@ public class AddressEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String city;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String street;
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
     private String postcode;
 }

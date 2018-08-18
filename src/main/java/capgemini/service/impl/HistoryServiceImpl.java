@@ -51,6 +51,8 @@ public class HistoryServiceImpl implements HistoryService {
         historyEntity.setReturnDepartmentEntity(returnDepartmentEntity);
 
         HistoryEntity savedHistoryEntity = historyRepository.save(historyEntity);
+
+        carEntity.addHistoryEntry(savedHistoryEntity);
         return HistoryMapper.toHistoryTo(savedHistoryEntity);
     }
 

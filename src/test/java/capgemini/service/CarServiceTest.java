@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest//(properties = "spring.profiles.active=hsql")
+@SpringBootTest(properties = "spring.profiles.active=hsql")
 public class CarServiceTest {
 
     @Autowired

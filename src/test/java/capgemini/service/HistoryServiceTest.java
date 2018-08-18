@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Year;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.profiles.active=hsql")
@@ -114,7 +113,7 @@ public class HistoryServiceTest {
                 .withStreet("SomeStreet")
                 .withPostcode("SomeCode")
                 .build();
-        AddressTo address = addressService.addNewAddress(addressTo);
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         CustomerTo customerTo = new CustomerTo.CustomerToBuilder()
                 .withFirstName("jan")
@@ -123,25 +122,25 @@ public class HistoryServiceTest {
                 .withBirthDate(new Date(19900101))
                 .withCardNumber(1234L)
                 .withPhone(777777777L)
-                .withAddressId(address.getId())
+                .withAddressId(testAddress.getId())
                 .build();
-        CustomerTo customer = customerService.addNewCustomer(customerTo);
+        CustomerTo testCustomer = customerService.addNewCustomer(customerTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("Dept")
                 .withPhone(777777777L)
                 .withAddressTo(addressTo)
                 .build();
-        DepartmentTo department = departmentService.addNewDepartment(departmentTo);
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         HistoryTo historyTo = new HistoryTo.HistoryToBuilder()
                 .withPrice(1000)
                 .withRentalDate(new Date(20180801))
                 .withReturnDate(new Date(20180810))
                 .withCarId(testCar.getId())
-                .withCustomerId(customer.getId())
-                .withRentalDepartmentId(department.getId())
-                .withReturnDepartmentId(department.getId())
+                .withCustomerId(testCustomer.getId())
+                .withRentalDepartmentId(testDepartment.getId())
+                .withReturnDepartmentId(testDepartment.getId())
                 .build();
         HistoryTo testEntry = historyService.addNewHistoryEntry(historyTo);
 
@@ -149,6 +148,11 @@ public class HistoryServiceTest {
         carService.deleteCar(testCar);
 
         //Then
+        assertNull(carService.findCarById(testCar.getId()));
+        assertNotNull(customerService.findCustomerById(testCustomer.getId()));
+        assertNotNull(addressService.findAddressById(testAddress.getId()));
+        assertNotNull(departmentService.findDepartmentById(testDepartment.getId()));
+        assertNotNull(customerService.findCustomerById(testCustomer.getId()));
         assertNull(historyService.findHistoryEntryById(testEntry.getId()));
     }
 }

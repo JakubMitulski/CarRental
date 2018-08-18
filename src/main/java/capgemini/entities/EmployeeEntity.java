@@ -18,9 +18,9 @@ public class EmployeeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String firstName;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String lastName;
     @Column(nullable = false)
     private Date birthDate;
@@ -29,11 +29,11 @@ public class EmployeeEntity implements Serializable {
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id")
     private PositionEntity positionEntity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private DepartmentEntity departmentEntity;
 

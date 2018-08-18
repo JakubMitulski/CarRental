@@ -15,7 +15,7 @@ public class DepartmentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private Long phone;
