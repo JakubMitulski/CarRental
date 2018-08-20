@@ -276,13 +276,19 @@ public class DepartmentServiceTest {
                 .build();
         AddressTo testAddress = addressService.addNewAddress(addressTo);
 
-        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
-                .withName("TestDep")
+        DepartmentTo departmentTo1 = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestDep1")
                 .withPhone(777777777L)
                 .withAddressId(testAddress.getId())
                 .build();
+        DepartmentTo testDepartment1 = departmentService.addNewDepartment(departmentTo1);
 
-        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+        DepartmentTo departmentTo2 = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestDep2")
+                .withPhone(888888888L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment2 = departmentService.addNewDepartment(departmentTo2);
 
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
@@ -295,7 +301,7 @@ public class DepartmentServiceTest {
                 .withBirthDate(now())
                 .withAddressId(testAddress.getId())
                 .withPositionId(testPosition.getId())
-                .withDepartmentId(testDepartment.getId())
+                .withDepartmentId(testDepartment1.getId())
                 .withCarIds(new HashSet<>())
                 .build();
         EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
@@ -306,7 +312,7 @@ public class DepartmentServiceTest {
                 .withBirthDate(now())
                 .withAddressId(testAddress.getId())
                 .withPositionId(testPosition.getId())
-                .withDepartmentId(testDepartment.getId())
+                .withDepartmentId(testDepartment2.getId())
                 .withCarIds(new HashSet<>())
                 .build();
         EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
@@ -344,6 +350,6 @@ public class DepartmentServiceTest {
         List<EmployeeTo> employees = departmentService.findEmployeesByDepartmentAndCar(departmentById, testCar1);
 
         //Then
-        assertEquals(2, employees.size());
+        assertEquals(1, employees.size());
     }
 }

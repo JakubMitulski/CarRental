@@ -3,6 +3,7 @@ package capgemini.service;
 import capgemini.dto.CarTo;
 import capgemini.dto.EmployeeTo;
 
+import java.util.Date;
 import java.util.Set;
 
 public interface CarService {
@@ -20,4 +21,8 @@ public interface CarService {
     CarTo findCarByBrandAndModel(CarTo carTo);
 
     Set<CarTo> findCarsByEmployee(EmployeeTo employeeTo);
+
+    Set<CarTo> findCarsRentedByMoreThan10DifferentCustomers();
+
+    Set<CarTo> findCarsRentedInGivenPeriod(Date rentalDate, Date returnDate);
 }

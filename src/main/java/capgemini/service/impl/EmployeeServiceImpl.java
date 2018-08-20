@@ -1,6 +1,7 @@
 package capgemini.service.impl;
 
 import capgemini.dao.*;
+import capgemini.dto.CriteriaQueryEmployeeTo;
 import capgemini.dto.EmployeeTo;
 import capgemini.entities.*;
 import capgemini.mappers.EmployeeMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -63,5 +65,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeTo updateEmployee(EmployeeTo employeeTo) {
         EmployeeEntity employeeEntity = employeeRepository.update(EmployeeMapper.toEmployeeEntity(employeeTo));
         return EmployeeMapper.toEmployeeTo(employeeEntity);
+    }
+
+    @Override
+    public List<EmployeeTo> findEmployeesByCriteria(CriteriaQueryEmployeeTo criteriaQueryEmployeeTo) {
+        List<EmployeeEntity> employeesByCriteria = employeeRepository.findEmployeesByCriteria(criteriaQueryEmployeeTo);
+        return EmployeeMapper.map2Tos(employeesByCriteria);
     }
 }

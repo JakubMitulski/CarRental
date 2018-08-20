@@ -10,12 +10,14 @@ import capgemini.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class CarServiceImpl implements CarService {
+
     @Autowired
     private CarDao carRepository;
 
@@ -55,8 +57,22 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Set<CarTo> findCarsByEmployee(EmployeeTo employeeTo) {
-        List<CarEntity> carsByEmployee = carRepository.findCarsByEmployee(EmployeeMapper.toEmployeeEntity(employeeTo));
-        Set<CarEntity> resultSet = new HashSet<>(carsByEmployee);
+        List<CarEntity> carEntities = carRepository.findCarsByEmployee(EmployeeMapper.toEmployeeEntity(employeeTo));
+        Set<CarEntity> resultSet = new HashSet<>(carEntities);
+        return CarMapper.map2Tos(resultSet);
+    }
+
+    @Override
+    public Set<CarTo> findCarsRentedByMoreThan10DifferentCustomers() {
+        List<CarEntity> carEntities = carRepository.findCarsRentedByMoreThan10DifferentCustomers();
+        Set<CarEntity> resultSet = new HashSet<>(carEntities);
+        return CarMapper.map2Tos(resultSet);
+    }
+
+    @Override
+    public Set<CarTo> findCarsRentedInGivenPeriod(Date rentalDate, Date returnDate) {
+        List<CarEntity> carEntities = carRepository.findCarsRentedInGivenPeriod(rentalDate, returnDate);
+        Set<CarEntity> resultSet = new HashSet<>(carEntities);
         return CarMapper.map2Tos(resultSet);
     }
 }

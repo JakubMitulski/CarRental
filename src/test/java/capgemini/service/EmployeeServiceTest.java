@@ -1,9 +1,6 @@
 package capgemini.service;
 
-import capgemini.dto.AddressTo;
-import capgemini.dto.DepartmentTo;
-import capgemini.dto.EmployeeTo;
-import capgemini.dto.PositionTo;
+import capgemini.dto.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.assertj.core.util.DateUtil.now;
 import static org.junit.Assert.assertEquals;
@@ -74,5 +73,288 @@ public class EmployeeServiceTest {
 
         //Then
         assertEquals(testEmployee.getFirstName(), employeeById.getFirstName());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindEmployeeByAllParamsInCriteriaQuery() {
+        //Given
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("TestCity")
+                .withStreet("TestStreet")
+                .withPostcode("TestCode")
+                .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestDep")
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+
+        PositionTo positionTo = new PositionTo.PositionToBuilder()
+                .withName("TestPosition")
+                .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
+
+        EmployeeTo employeeTo1 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test1")
+                .withLastName("Test1")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
+
+        HashSet<Long> carIds = new HashSet<>();
+        carIds.add(testCar.getId());
+
+        EmployeeTo employeeTo2 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test2")
+                .withLastName("Test2")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(carIds)
+                .build();
+        EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
+
+        CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
+                .withCarId(testCar.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withPositionId(testPosition.getId())
+                .build();
+
+        //When
+        List<EmployeeTo> employeesByCriteria = employeeService.findEmployeesByCriteria(criteriaQueryEmployeeTo);
+
+        //Then
+        assertEquals(1, employeesByCriteria.size());
+        assertEquals("Test2", employeesByCriteria.get(0).getLastName());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindEmployeeByCarInCriteriaQuery() {
+        //Given
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("TestCity")
+                .withStreet("TestStreet")
+                .withPostcode("TestCode")
+                .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestDep")
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+
+        PositionTo positionTo = new PositionTo.PositionToBuilder()
+                .withName("TestPosition")
+                .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
+
+
+        HashSet<Long> carIds = new HashSet<>();
+        carIds.add(testCar.getId());
+
+        EmployeeTo employeeTo1 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test1")
+                .withLastName("Test1")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
+
+        EmployeeTo employeeTo2 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test2")
+                .withLastName("Test2")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(carIds)
+                .build();
+        EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
+
+        CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
+                .withCarId(testCar.getId())
+                .build();
+
+        //When
+        List<EmployeeTo> employeesByCriteria = employeeService.findEmployeesByCriteria(criteriaQueryEmployeeTo);
+
+        //Then
+        assertEquals(1, employeesByCriteria.size());
+        assertEquals("Test2", employeesByCriteria.get(0).getLastName());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindEmployeeByDepartmentInCriteriaQuery() {
+        //Given
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("TestCity")
+                .withStreet("TestStreet")
+                .withPostcode("TestCode")
+                .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestDep")
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+
+        PositionTo positionTo = new PositionTo.PositionToBuilder()
+                .withName("TestPosition")
+                .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
+
+        EmployeeTo employeeTo1 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test1")
+                .withLastName("Test1")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
+
+        EmployeeTo employeeTo2 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test2")
+                .withLastName("Test2")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
+
+        CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
+                .withDepartmentId(testDepartment.getId())
+                .build();
+
+        //When
+        List<EmployeeTo> employeesByCriteria = employeeService.findEmployeesByCriteria(criteriaQueryEmployeeTo);
+
+        //Then
+        assertEquals(2, employeesByCriteria.size());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindEmployeeByPositionInCriteriaQuery() {
+        //Given
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("TestCity")
+                .withStreet("TestStreet")
+                .withPostcode("TestCode")
+                .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("TestDep")
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+
+        PositionTo positionTo = new PositionTo.PositionToBuilder()
+                .withName("TestPosition")
+                .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
+
+        EmployeeTo employeeTo1 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test1")
+                .withLastName("Test1")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
+
+        EmployeeTo employeeTo2 = new EmployeeTo.EmployeeToBuilder()
+                .withFirstName("Test2")
+                .withLastName("Test2")
+                .withBirthDate(now())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
+                .build();
+        EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
+
+        CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
+                .withPositionId(testPosition.getId())
+                .build();
+
+        //When
+        List<EmployeeTo> employeesByCriteria = employeeService.findEmployeesByCriteria(criteriaQueryEmployeeTo);
+
+        //Then
+        assertEquals(2, employeesByCriteria.size());
     }
 }

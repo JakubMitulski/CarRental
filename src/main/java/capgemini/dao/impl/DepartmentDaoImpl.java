@@ -47,7 +47,7 @@ public class DepartmentDaoImpl extends AbstractDao<DepartmentEntity, Long> imple
         TypedQuery<EmployeeEntity> query = entityManager.createQuery(
                 "select e " +
                         "from EmployeeEntity e join e.cars car " +
-                        "where (e.departmentEntity.id = :deptId and car.id= :carId)", EmployeeEntity.class);
+                        "where e.departmentEntity.id = :deptId and car.id= :carId", EmployeeEntity.class);
         query.setParameter("deptId", departmentEntity.getId());
         query.setParameter("carId", carEntity.getId());
         return query.getResultList();
