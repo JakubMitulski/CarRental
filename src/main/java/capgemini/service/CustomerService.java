@@ -9,4 +9,6 @@ public interface CustomerService {
     CustomerTo addNewCustomer(CustomerTo customerTo);
 
     CustomerTo updateCustomer(CustomerTo customerTo);
+
+    void deleteCustomer(CustomerTo customerTo);
 }

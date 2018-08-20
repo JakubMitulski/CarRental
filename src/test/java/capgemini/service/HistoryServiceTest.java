@@ -53,7 +53,7 @@ public class HistoryServiceTest {
                 .withStreet("SomeStreet")
                 .withPostcode("SomeCode")
                 .build();
-        AddressTo address = addressService.addNewAddress(addressTo);
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         CustomerTo customerTo = new CustomerTo.CustomerToBuilder()
                 .withFirstName("jan")
@@ -62,14 +62,14 @@ public class HistoryServiceTest {
                 .withBirthDate(new Date(19900101))
                 .withCardNumber(1234L)
                 .withPhone(777777777L)
-                .withAddressId(address.getId())
+                .withAddressId(testAddress.getId())
                 .build();
         CustomerTo customer = customerService.addNewCustomer(customerTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("Dept")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
         DepartmentTo department = departmentService.addNewDepartment(departmentTo);
 
@@ -129,7 +129,7 @@ public class HistoryServiceTest {
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("Dept")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
@@ -149,10 +149,133 @@ public class HistoryServiceTest {
 
         //Then
         assertNull(carService.findCarById(testCar.getId()));
-        assertNotNull(customerService.findCustomerById(testCustomer.getId()));
         assertNotNull(addressService.findAddressById(testAddress.getId()));
         assertNotNull(departmentService.findDepartmentById(testDepartment.getId()));
         assertNotNull(customerService.findCustomerById(testCustomer.getId()));
+        assertNull(historyService.findHistoryEntryById(testEntry.getId()));
+    }
+
+    @Test
+    @Transactional
+    public void shouldRemoveHistoryEntryWhenRemovingDepartment() {
+        //Given
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("SomeCity")
+                .withStreet("SomeStreet")
+                .withPostcode("SomeCode")
+                .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        CustomerTo customerTo = new CustomerTo.CustomerToBuilder()
+                .withFirstName("jan")
+                .withLastName("kowalski")
+                .withEmail("jan@gmail.com")
+                .withBirthDate(new Date(19900101))
+                .withCardNumber(1234L)
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        CustomerTo testCustomer = customerService.addNewCustomer(customerTo);
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("Dept")
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+
+        HistoryTo historyTo = new HistoryTo.HistoryToBuilder()
+                .withPrice(1000)
+                .withRentalDate(new Date(20180801))
+                .withReturnDate(new Date(20180810))
+                .withCarId(testCar.getId())
+                .withCustomerId(testCustomer.getId())
+                .withRentalDepartmentId(testDepartment.getId())
+                .withReturnDepartmentId(testDepartment.getId())
+                .build();
+        HistoryTo testEntry = historyService.addNewHistoryEntry(historyTo);
+
+        //When
+        departmentService.deleteDepartment(testDepartment);
+
+        //Then
+        assertNotNull(carService.findCarById(testCar.getId()));
+        assertNull(departmentService.findDepartmentById(testDepartment.getId()));
+        assertNotNull(customerService.findCustomerById(testCustomer.getId()));
+        assertNull(historyService.findHistoryEntryById(testEntry.getId()));
+    }
+
+    @Test
+    @Transactional
+    public void shouldRemoveHistoryEntryWhenRemovingCustomer() {
+        //Given
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("SomeCity")
+                .withStreet("SomeStreet")
+                .withPostcode("SomeCode")
+                .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        CustomerTo customerTo = new CustomerTo.CustomerToBuilder()
+                .withFirstName("jan")
+                .withLastName("kowalski")
+                .withEmail("jan@gmail.com")
+                .withBirthDate(new Date(19900101))
+                .withCardNumber(1234L)
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        CustomerTo testCustomer = customerService.addNewCustomer(customerTo);
+
+        DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
+                .withName("Dept")
+                .withPhone(777777777L)
+                .withAddressId(testAddress.getId())
+                .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
+
+        HistoryTo historyTo = new HistoryTo.HistoryToBuilder()
+                .withPrice(1000)
+                .withRentalDate(new Date(20180801))
+                .withReturnDate(new Date(20180810))
+                .withCarId(testCar.getId())
+                .withCustomerId(testCustomer.getId())
+                .withRentalDepartmentId(testDepartment.getId())
+                .withReturnDepartmentId(testDepartment.getId())
+                .build();
+        HistoryTo testEntry = historyService.addNewHistoryEntry(historyTo);
+
+        //When
+        customerService.deleteCustomer(testCustomer);
+
+        //Then
+        assertNotNull(carService.findCarById(testCar.getId()));
+        assertNotNull(departmentService.findDepartmentById(testDepartment.getId()));
+        assertNull(customerService.findCustomerById(testCustomer.getId()));
         assertNull(historyService.findHistoryEntryById(testEntry.getId()));
     }
 }

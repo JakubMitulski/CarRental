@@ -38,10 +38,6 @@ public class HistoryTo implements Serializable {
         private Long rentalDepartmentId;
         private Long returnDepartmentId;
 
-        public HistoryToBuilder() {
-            super();
-        }
-
         public HistoryToBuilder withId(Long id) {
             this.id = id;
             return this;

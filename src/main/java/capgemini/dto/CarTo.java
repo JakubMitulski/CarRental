@@ -39,10 +39,6 @@ public class CarTo {
         private Integer mileage;
         private String carType;
 
-        public CarToBuilder() {
-            super();
-        }
-
         public CarToBuilder withId(Long id) {
             this.id = id;
             return this;
@@ -102,6 +98,7 @@ public class CarTo {
                     model == null || model.isEmpty() ||
                     color == null || color.isEmpty() ||
                     productionYear == null ||
+                    engineCapacity == null ||
                     horsePower == null ||
                     mileage == null ||
                     carType == null || carType.isEmpty()) {

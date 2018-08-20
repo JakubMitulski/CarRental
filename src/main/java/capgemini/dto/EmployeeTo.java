@@ -19,10 +19,10 @@ public class EmployeeTo {
     private String firstName;
     private String lastName;
     private Date birthDate;
-    private AddressTo addressTo;
-    private PositionTo positionTo;
-    private DepartmentTo departmentTo;
-    private Set<CarTo> carTos = new HashSet<>();
+    private Long addressId;
+    private Long positionId;
+    private Long departmentId;
+    private Set<Long> carIds = new HashSet<>();
 
     public static EmployeeToBuilder builder() {
         return new EmployeeToBuilder();
@@ -34,14 +34,10 @@ public class EmployeeTo {
         private String firstName;
         private String lastName;
         private Date birthDate;
-        private AddressTo addressTo;
-        private PositionTo positionTo;
-        private DepartmentTo departmentTo;
-        private Set<CarTo> carTos = new HashSet<>();
-
-        public EmployeeToBuilder() {
-            super();
-        }
+        private Long addressId;
+        private Long positionId;
+        private Long departmentId;
+        private Set<Long> carIds;
 
         public EmployeeToBuilder withId(Long id) {
             this.id = id;
@@ -63,40 +59,40 @@ public class EmployeeTo {
             return this;
         }
 
-        public EmployeeToBuilder withAddressTo(AddressTo addressTo) {
-            this.addressTo = addressTo;
+        public EmployeeToBuilder withAddressId(Long addressId) {
+            this.addressId = addressId;
             return this;
         }
 
-        public EmployeeToBuilder withPositionTo(PositionTo positionTo) {
-            this.positionTo = positionTo;
+        public EmployeeToBuilder withPositionId(Long positionId) {
+            this.positionId = positionId;
             return this;
         }
 
-        public EmployeeToBuilder withDepartmentTo(DepartmentTo departmentTo) {
-            this.departmentTo = departmentTo;
+        public EmployeeToBuilder withDepartmentId(Long departmentId) {
+            this.departmentId = departmentId;
             return this;
         }
 
-        public EmployeeToBuilder withCarTos(Set<CarTo> carTos) {
-            this.carTos = carTos;
+        public EmployeeToBuilder withCarIds(Set<Long> carIds) {
+            this.carIds = carIds;
             return this;
         }
 
         public EmployeeTo build() {
-            checkBeforeBuild(firstName, lastName, birthDate, addressTo, positionTo, departmentTo, carTos);
-            return new EmployeeTo(id, firstName, lastName, birthDate, addressTo, positionTo, departmentTo, carTos);
+            checkBeforeBuild(firstName, lastName, birthDate, addressId, positionId, departmentId, carIds);
+            return new EmployeeTo(id, firstName, lastName, birthDate, addressId, positionId, departmentId, carIds);
         }
 
-        private void checkBeforeBuild(String firstName, String lastName, Date birthDate, AddressTo addressTo,
-                                      PositionTo positionTo, DepartmentTo departmentTo,
-                                      Set<CarTo> carTos) {
+        private void checkBeforeBuild(String firstName, String lastName, Date birthDate, Long addressId,
+                                      Long positionId, Long departmentId, Set<Long> carIds) {
             if (firstName == null || firstName.isEmpty() ||
                     lastName == null || lastName.isEmpty() ||
                     birthDate == null ||
-                    addressTo == null ||
-                    positionTo == null ||
-                    carTos == null) {
+                    addressId == null ||
+                    positionId == null ||
+                    departmentId == null ||
+                    carIds == null) {
                 throw new RuntimeException("Incorrect employee_to be created");
             }
         }

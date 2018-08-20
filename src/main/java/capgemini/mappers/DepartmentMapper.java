@@ -16,7 +16,7 @@ public class DepartmentMapper {
                 .withId(departmentEntity.getId())
                 .withName(departmentEntity.getName())
                 .withPhone(departmentEntity.getPhone())
-                .withAddressTo(AddressMapper.toAddressTo(departmentEntity.getAddress()))
+                .withAddressId(departmentEntity.getAddress().getId())
                 .build();
     }
 
@@ -28,7 +28,6 @@ public class DepartmentMapper {
         departmentEntity.setId(departmentTo.getId());
         departmentEntity.setName(departmentTo.getName());
         departmentEntity.setPhone(departmentTo.getPhone());
-        departmentEntity.setAddress(AddressMapper.toAddressEntity(departmentTo.getAddressTo()));
 
         return departmentEntity;
     }

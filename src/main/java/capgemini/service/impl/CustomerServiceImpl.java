@@ -3,6 +3,7 @@ package capgemini.service.impl;
 import capgemini.dao.AddressDao;
 import capgemini.dao.CustomerDao;
 import capgemini.dto.CustomerTo;
+import capgemini.dto.DepartmentTo;
 import capgemini.entities.AddressEntity;
 import capgemini.entities.CustomerEntity;
 import capgemini.mappers.CustomerMapper;
@@ -34,6 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerEntity customerEntity = customerRepository.save(entity);
         return CustomerMapper.toCustomerTo(customerEntity);
     }
+
+    @Override
+    public void deleteCustomer(CustomerTo customerTo) {
+        customerRepository.delete(customerTo.getId());
+    }
+
 
     @Override
     public CustomerTo updateCustomer(CustomerTo customerTo) {

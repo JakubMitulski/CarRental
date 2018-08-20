@@ -1,6 +1,7 @@
 package capgemini.mappers;
 
 import capgemini.dto.EmployeeTo;
+import capgemini.entities.CarEntity;
 import capgemini.entities.EmployeeEntity;
 
 import java.util.List;
@@ -10,19 +11,26 @@ import java.util.stream.Collectors;
 
 public class EmployeeMapper {
 
+    private static final Long DEFAULT_DEPARTMENT_ID = 0L;
+
     public static EmployeeTo toEmployeeTo(EmployeeEntity employeeEntity) {
+        Long departmentId = DEFAULT_DEPARTMENT_ID;
+
         if (employeeEntity == null)
             return null;
+        if (employeeEntity.getDepartmentEntity() != null){
+            departmentId = employeeEntity.getDepartmentEntity().getId();
+        }
 
         return new EmployeeTo.EmployeeToBuilder()
                 .withId(employeeEntity.getId())
                 .withFirstName(employeeEntity.getFirstName())
                 .withLastName(employeeEntity.getLastName())
                 .withBirthDate(employeeEntity.getBirthDate())
-                .withAddressTo(AddressMapper.toAddressTo(employeeEntity.getAddress()))
-                .withPositionTo(PositionMapper.toPositionTo(employeeEntity.getPositionEntity()))
-                .withDepartmentTo(DepartmentMapper.toDepartmentTo(employeeEntity.getDepartmentEntity()))
-                .withCarTos(CarMapper.map2Tos(employeeEntity.getCars()))
+                .withAddressId(employeeEntity.getAddress().getId())
+                .withPositionId(employeeEntity.getPositionEntity().getId())
+                .withDepartmentId(departmentId)
+                .withCarIds(employeeEntity.getCars().stream().map(CarEntity::getId).collect(Collectors.toSet()))
                 .build();
     }
 
@@ -35,10 +43,6 @@ public class EmployeeMapper {
         employeeEntity.setFirstName(employeeTo.getFirstName());
         employeeEntity.setLastName(employeeTo.getLastName());
         employeeEntity.setBirthDate(employeeTo.getBirthDate());
-        employeeEntity.setAddress(AddressMapper.toAddressEntity(employeeTo.getAddressTo()));
-        employeeEntity.setPositionEntity(PositionMapper.toPositionEntity(employeeTo.getPositionTo()));
-        employeeEntity.setDepartmentEntity(DepartmentMapper.toDepartmentEntity(employeeTo.getDepartmentTo()));
-        employeeEntity.setCars(CarMapper.map2Entities(employeeTo.getCarTos()));
 
         return employeeEntity;
     }

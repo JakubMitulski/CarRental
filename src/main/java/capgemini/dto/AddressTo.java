@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -27,10 +26,6 @@ public class AddressTo {
         private String city;
         private String street;
         private String postcode;
-
-        public AddressToBuilder() {
-            super();
-        }
 
         public AddressToBuilder withId(Long id) {
             this.id = id;

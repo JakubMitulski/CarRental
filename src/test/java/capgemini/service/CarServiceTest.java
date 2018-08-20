@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +25,15 @@ public class CarServiceTest {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    private PositionService positionService;
 
     @Test
     @Transactional
@@ -118,25 +126,28 @@ public class CarServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
                 .build();
+        PositionTo testPosotion = positionService.addNewPosition(positionTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestName")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         EmployeeTo employeeTo = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(departmentTo)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosotion.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
         EmployeeTo testEmployee = employeeService.addNewEmployee(employeeTo);
 
@@ -144,10 +155,8 @@ public class CarServiceTest {
         carService.addCarToEmployeeResponsibility(testCar, testEmployee);
 
         //Then
-        Set<CarTo> carTos = employeeService.findEmployeeById(testEmployee.getId()).getCarTos();
-        ArrayList<CarTo> carTosList = new ArrayList<>(carTos);
-        assertEquals(1, carTos.size());
-        assertEquals("mazda", carTosList.get(0).getBrand());
+        Set<Long> carIds = employeeService.findEmployeeById(testEmployee.getId()).getCarIds();
+        assertEquals(1, carIds.size());
     }
 
     @Test
@@ -220,25 +229,28 @@ public class CarServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
                 .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestName")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
+        DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         EmployeeTo employeeTo = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(departmentTo)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
         EmployeeTo testEmployee = employeeService.addNewEmployee(employeeTo);
 

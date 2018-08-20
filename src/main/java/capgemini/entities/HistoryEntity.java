@@ -23,18 +23,15 @@ public class HistoryEntity implements Serializable {
     @Column(nullable = false)
     private Date returnDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CarEntity carEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customers_id", nullable = false)
     private CustomerEntity customerEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rentalDepartments_id", nullable = false)
     private DepartmentEntity rentalDepartmentEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "returnDepartments_id")
     private DepartmentEntity returnDepartmentEntity;
 }

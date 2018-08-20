@@ -1,9 +1,11 @@
 package capgemini.service.impl;
 
+import capgemini.dao.AddressDao;
 import capgemini.dao.DepartmentDao;
 import capgemini.dto.CarTo;
 import capgemini.dto.DepartmentTo;
 import capgemini.dto.EmployeeTo;
+import capgemini.entities.AddressEntity;
 import capgemini.entities.DepartmentEntity;
 import capgemini.entities.EmployeeEntity;
 import capgemini.mappers.CarMapper;
@@ -21,6 +23,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     private DepartmentDao departmentRepository;
 
+    @Autowired
+    private AddressDao addressRepository;
+
+
     @Override
     public DepartmentTo findDepartmentById(Long id) {
         DepartmentEntity departmentEntity = departmentRepository.findOne(id);
@@ -29,8 +35,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentTo addNewDepartment(DepartmentTo departmentTo) {
-        DepartmentEntity departmentEntity = departmentRepository
-                .save(DepartmentMapper.toDepartmentEntity(departmentTo));
+        DepartmentEntity entity = DepartmentMapper.toDepartmentEntity(departmentTo);
+
+        AddressEntity addressEntity = addressRepository.findOne(departmentTo.getAddressId());
+        entity.setAddress(addressEntity);
+        DepartmentEntity departmentEntity = departmentRepository.save(entity);
+
         return DepartmentMapper.toDepartmentTo(departmentEntity);
     }
 
@@ -41,8 +51,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentTo updateDepartment(DepartmentTo departmentTo) {
-        DepartmentEntity departmentEntity = departmentRepository.update(
-                DepartmentMapper.toDepartmentEntity(departmentTo));
+        DepartmentEntity entity = DepartmentMapper.toDepartmentEntity(departmentTo);
+
+        AddressEntity addressEntity = addressRepository.findOne(departmentTo.getAddressId());
+        entity.setAddress(addressEntity);
+        DepartmentEntity departmentEntity = departmentRepository.update(entity);
+
         return DepartmentMapper.toDepartmentTo(departmentEntity);
     }
 

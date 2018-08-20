@@ -37,10 +37,6 @@ public class CustomerTo {
         private Long phone;
         private Long addressId;
 
-        public CustomerToBuilder() {
-            super();
-        }
-
         public CustomerToBuilder withId(Long id) {
             this.id = id;
             return this;

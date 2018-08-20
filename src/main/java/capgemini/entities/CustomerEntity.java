@@ -5,7 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -29,7 +31,14 @@ public class CustomerEntity implements Serializable {
     @Column(nullable = false)
     private Long phone;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "ADDRESS_ID")
     private AddressEntity addressEntity;
+
+    @OneToMany(mappedBy = "customerEntity", cascade = CascadeType.REMOVE)
+    private Collection<HistoryEntity> historyEntities = new HashSet<>();
+
+    public void addHistoryEntry(HistoryEntity historyEntity){
+        this.historyEntities.add(historyEntity);
+    }
 }

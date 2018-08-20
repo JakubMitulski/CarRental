@@ -22,10 +22,6 @@ public class PositionTo {
         private Long id;
         private String name;
 
-        public PositionToBuilder() {
-            super();
-        }
-
         public PositionToBuilder withId(Long id) {
             this.id = id;
             return this;

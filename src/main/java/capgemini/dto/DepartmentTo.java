@@ -14,7 +14,7 @@ public class DepartmentTo {
     private Long id;
     private String name;
     private Long phone;
-    private AddressTo addressTo;
+    private Long addressId;
 
     public static DepartmentToBuilder builder() {
         return new DepartmentToBuilder();
@@ -25,11 +25,7 @@ public class DepartmentTo {
         private Long id;
         private String name;
         private Long phone;
-        private AddressTo addressTo;
-
-        public DepartmentToBuilder() {
-            super();
-        }
+        private Long addressId;
 
         public DepartmentToBuilder withId(Long id) {
             this.id = id;
@@ -46,18 +42,18 @@ public class DepartmentTo {
             return this;
         }
 
-        public DepartmentToBuilder withAddressTo(AddressTo addressTo) {
-            this.addressTo = addressTo;
+        public DepartmentToBuilder withAddressId(Long addressId) {
+            this.addressId = addressId;
             return this;
         }
 
         public DepartmentTo build() {
-            checkBeforeBuild(name, phone, addressTo);
-            return new DepartmentTo(id, name, phone, addressTo);
+            checkBeforeBuild(name, phone, addressId);
+            return new DepartmentTo(id, name, phone, addressId);
         }
 
-        private void checkBeforeBuild(String name, Long phone, AddressTo addressTo) {
-            if (name == null || name.isEmpty() || phone == null || addressTo == null) {
+        private void checkBeforeBuild(String name, Long phone, Long addressId) {
+            if (name == null || name.isEmpty() || phone == null || addressId == null) {
                 throw new RuntimeException("Incorrect department_to be created");
             }
         }

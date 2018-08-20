@@ -29,6 +29,12 @@ public class DepartmentServiceTest {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private PositionService positionService;
+
     @Test
     @Transactional
     public void shouldFindDepartmentById() {
@@ -38,13 +44,13 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
-
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         //When
@@ -63,13 +69,13 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
-
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         //When
@@ -88,13 +94,13 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
-
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         //When
@@ -115,29 +121,29 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
-
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
                 .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
 
         EmployeeTo employeeTo = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(departmentTo)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
-
         EmployeeTo testEmployee = employeeService.addNewEmployee(employeeTo);
 
         //When
@@ -145,7 +151,7 @@ public class DepartmentServiceTest {
 
         //Then
         EmployeeTo employeeById = employeeService.findEmployeeById(testEmployee.getId());
-        assertEquals(testDepartment.getName(), employeeById.getDepartmentTo().getName());
+        assertEquals(testDepartment.getId(), employeeById.getDepartmentId());
     }
 
     @Test
@@ -157,29 +163,44 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
-
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
                 .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
+
+        CarTo carTo = new CarTo.CarToBuilder()
+                .withBrand("mazda")
+                .withModel("6")
+                .withColor("gunmetal")
+                .withProductionYear(Year.parse("2015"))
+                .withEngineCapacity(2300)
+                .withHorsePower(180)
+                .withMileage(45000)
+                .withCarType("limo")
+                .build();
+        CarTo testCar = carService.addNewCar(carTo);
+
+        HashSet<Long> carIds = new HashSet<>();
+        carIds.add(testCar.getId());
 
         EmployeeTo employeeTo = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(departmentTo)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(carIds)
                 .build();
-
         EmployeeTo testEmployee = employeeService.addNewEmployee(employeeTo);
 
         //When
@@ -187,7 +208,8 @@ public class DepartmentServiceTest {
 
         //Then
         EmployeeTo employeeById = employeeService.findEmployeeById(testEmployee.getId());
-        assertNull(employeeById.getDepartmentTo());
+        long departmentId = employeeById.getDepartmentId();
+        assertEquals(0L, departmentId);
     }
 
     @Test
@@ -199,49 +221,45 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
-
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
 
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
                 .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
 
         EmployeeTo employeeTo1 = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(null)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
+        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
 
         EmployeeTo employeeTo2 = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(null)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
-
-        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
         EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
-        testEmployee1.setDepartmentTo(testDepartment);
-        testEmployee2.setDepartmentTo(testDepartment);
-        employeeService.updateEmployee(testEmployee1);
-        employeeService.updateEmployee(testEmployee2);
 
         //When
-        List<EmployeeTo> employeesByDepartment = departmentService
-                .findEmployeesByDepartment(testEmployee1.getDepartmentTo());
+        DepartmentTo departmentById = departmentService.findDepartmentById(testEmployee1.getDepartmentId());
+        List<EmployeeTo> employeesByDepartment = departmentService.findEmployeesByDepartment(departmentById);
 
         //Then
         assertEquals(2, employeesByDepartment.size());
@@ -256,11 +274,12 @@ public class DepartmentServiceTest {
                 .withStreet("TestStreet")
                 .withPostcode("TestCode")
                 .build();
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
 
         DepartmentTo departmentTo = new DepartmentTo.DepartmentToBuilder()
                 .withName("TestDep")
                 .withPhone(777777777L)
-                .withAddressTo(addressTo)
+                .withAddressId(testAddress.getId())
                 .build();
 
         DepartmentTo testDepartment = departmentService.addNewDepartment(departmentTo);
@@ -268,26 +287,29 @@ public class DepartmentServiceTest {
         PositionTo positionTo = new PositionTo.PositionToBuilder()
                 .withName("TestPosition")
                 .build();
+        PositionTo testPosition = positionService.addNewPosition(positionTo);
 
         EmployeeTo employeeTo1 = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(null)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
+        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
 
         EmployeeTo employeeTo2 = new EmployeeTo.EmployeeToBuilder()
                 .withFirstName("Test")
                 .withLastName("Test")
                 .withBirthDate(now())
-                .withAddressTo(addressTo)
-                .withPositionTo(positionTo)
-                .withDepartmentTo(null)
-                .withCarTos(new HashSet<>())
+                .withAddressId(testAddress.getId())
+                .withPositionId(testPosition.getId())
+                .withDepartmentId(testDepartment.getId())
+                .withCarIds(new HashSet<>())
                 .build();
+        EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
 
         CarTo carTo1 = new CarTo.CarToBuilder()
                 .withBrand("mazda")
@@ -313,19 +335,13 @@ public class DepartmentServiceTest {
                 .build();
         CarTo testCar2 = carService.addNewCar(carTo2);
 
-        EmployeeTo testEmployee1 = employeeService.addNewEmployee(employeeTo1);
-        EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
-        testEmployee1.setDepartmentTo(testDepartment);
-        testEmployee2.setDepartmentTo(testDepartment);
-        employeeService.updateEmployee(testEmployee1);
-        employeeService.updateEmployee(testEmployee2);
         carService.addCarToEmployeeResponsibility(testCar1, testEmployee1);
         carService.addCarToEmployeeResponsibility(testCar2, testEmployee1);
         carService.addCarToEmployeeResponsibility(testCar1, testEmployee2);
 
         //When
-        List<EmployeeTo> employees = departmentService
-                .findEmployeesByDepartmentAndCar(testEmployee1.getDepartmentTo(), testCar1);
+        DepartmentTo departmentById = departmentService.findDepartmentById(testEmployee1.getDepartmentId());
+        List<EmployeeTo> employees = departmentService.findEmployeesByDepartmentAndCar(departmentById, testCar1);
 
         //Then
         assertEquals(2, employees.size());
