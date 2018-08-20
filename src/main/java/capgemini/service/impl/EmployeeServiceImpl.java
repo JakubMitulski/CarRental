@@ -1,9 +1,13 @@
 package capgemini.service.impl;
 
 import capgemini.dao.*;
+import capgemini.dto.CarTo;
 import capgemini.dto.CriteriaQueryEmployeeTo;
+import capgemini.dto.DepartmentTo;
 import capgemini.dto.EmployeeTo;
 import capgemini.entities.*;
+import capgemini.mappers.CarMapper;
+import capgemini.mappers.DepartmentMapper;
 import capgemini.mappers.EmployeeMapper;
 import capgemini.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +63,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         EmployeeEntity employeeEntity = employeeRepository.save(entity);
         return EmployeeMapper.toEmployeeTo(employeeEntity);
+    }
+
+    @Override
+    public void addEmployeeToDepartment(EmployeeTo employeeTo, DepartmentTo departmentTo) {
+        employeeRepository.addEmployeeToDepartment(
+                EmployeeMapper.toEmployeeEntity(employeeTo),
+                DepartmentMapper.toDepartmentEntity(departmentTo));
+    }
+
+    @Override
+    public void removeEmployeeFromDepartment(EmployeeTo employeeTo, DepartmentTo departmentTo) {
+        employeeRepository.removeEmployeeFromDepartment(
+                EmployeeMapper.toEmployeeEntity(employeeTo),
+                DepartmentMapper.toDepartmentEntity(departmentTo));
+    }
+
+    @Override
+    public List<EmployeeTo> findEmployeesByDepartment(DepartmentTo departmentTo) {
+        List<EmployeeEntity> employeeEntities = employeeRepository
+                .findEmployeesByDepartment(DepartmentMapper.toDepartmentEntity(departmentTo));
+        return EmployeeMapper.map2Tos(employeeEntities);
+    }
+
+    @Override
+    public List<EmployeeTo> findEmployeesByDepartmentAndCar(DepartmentTo departmentTo, CarTo carTo) {
+        List<EmployeeEntity> employeeEntities = employeeRepository.findEmployeesByDepartmentAndCar(
+                DepartmentMapper.toDepartmentEntity(departmentTo),
+                CarMapper.toCarEntity(carTo));
+        return EmployeeMapper.map2Tos(employeeEntities);
     }
 
     @Override

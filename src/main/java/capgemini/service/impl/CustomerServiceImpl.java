@@ -3,7 +3,6 @@ package capgemini.service.impl;
 import capgemini.dao.AddressDao;
 import capgemini.dao.CustomerDao;
 import capgemini.dto.CustomerTo;
-import capgemini.dto.DepartmentTo;
 import capgemini.entities.AddressEntity;
 import capgemini.entities.CustomerEntity;
 import capgemini.mappers.CustomerMapper;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
     @Autowired
     private CustomerDao customerRepository;
 
@@ -40,7 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(CustomerTo customerTo) {
         customerRepository.delete(customerTo.getId());
     }
-
 
     @Override
     public CustomerTo updateCustomer(CustomerTo customerTo) {
