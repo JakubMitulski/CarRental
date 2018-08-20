@@ -62,6 +62,10 @@ public class CarServiceImpl implements CarService {
         return CarMapper.map2Tos(resultSet);
     }
 
+    /**
+     * Method returns list of cars which were rented by more than ten different customers
+     * @return list of cars
+     */
     @Override
     public Set<CarTo> findCarsRentedByMoreThan10DifferentCustomers() {
         List<CarEntity> carEntities = carRepository.findCarsRentedByMoreThan10DifferentCustomers();
@@ -69,6 +73,13 @@ public class CarServiceImpl implements CarService {
         return CarMapper.map2Tos(resultSet);
     }
 
+    /**
+     * Method returns list of cars which were rented not later than in given rental date and
+     * returned not sooner than in given return date.
+     * @param rentalDate is a date of renting a car from the rental department
+     * @param returnDate is a date of returning a car to the rental department
+     * @return list of cars
+     */
     @Override
     public Set<CarTo> findCarsRentedInGivenPeriod(Date rentalDate, Date returnDate) {
         List<CarEntity> carEntities = carRepository.findCarsRentedInGivenPeriod(rentalDate, returnDate);

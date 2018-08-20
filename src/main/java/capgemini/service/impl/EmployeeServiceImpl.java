@@ -100,6 +100,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeMapper.toEmployeeTo(employeeEntity);
     }
 
+    /**
+     * Method returns list of employees which were searched by one or many criteria params included in param object.
+     * @param criteriaQueryEmployeeTo is storage for car id, name of employee position and name of rental department
+     * @return list of employees
+     */
     @Override
     public List<EmployeeTo> findEmployeesByCriteria(CriteriaQueryEmployeeTo criteriaQueryEmployeeTo) {
         List<EmployeeEntity> employeesByCriteria = employeeRepository.findEmployeesByCriteria(criteriaQueryEmployeeTo);

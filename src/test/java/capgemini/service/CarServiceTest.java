@@ -273,7 +273,7 @@ public class CarServiceTest {
     @Transactional
     public void shouldFindCarsRentedByMoreThan10DifferentCustomers() {
         //Given
-        buildRentalHistoryFor10DifferentCustomersTest();
+        buildRentalHistoryForTest();
 
         //When
         Set<CarTo> resultSet = carService.findCarsRentedByMoreThan10DifferentCustomers();
@@ -286,7 +286,7 @@ public class CarServiceTest {
     @Transactional
     public void shouldFindCarsRentedInGivenPeriod() {
         //Given
-        buildRentalHistoryFor10DifferentCustomersTest();
+        buildRentalHistoryForTest();
 
         //When
         Date rentalDate = new Date(20180810);
@@ -297,7 +297,7 @@ public class CarServiceTest {
         assertEquals(2, resultSet.size());
     }
 
-    private void buildRentalHistoryFor10DifferentCustomersTest() {
+    private void buildRentalHistoryForTest() {
         CarTo carTo1 = new CarTo.CarToBuilder()
                 .withBrand("mazda")
                 .withModel("6")

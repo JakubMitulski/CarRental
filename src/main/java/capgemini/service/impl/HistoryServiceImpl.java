@@ -34,6 +34,11 @@ public class HistoryServiceImpl implements HistoryService {
         return HistoryMapper.toHistoryTo(historyRepository.findOne(id));
     }
 
+    /**
+     * Method for adding entries of renting a car.
+     * @param historyTo contains price of rental, rent/return date of a car, car's, customer's, rental and return department's id.
+     * @return rental history entry object.
+     */
     @Override
     public HistoryTo addNewHistoryEntry(HistoryTo historyTo) {
         HistoryEntity historyEntity = HistoryMapper.toHistoryEntity(historyTo);

@@ -35,4 +35,28 @@ public class AddressServiceTest {
         //Then
         assertEquals(testAddress.getStreet(), addressById.getStreet());
     }
+
+    @Test
+    @Transactional
+    public void shouldUpdateAddress() {
+        //Given
+        AddressTo addressTo = new AddressTo.AddressToBuilder()
+                .withCity("TestCity")
+                .withStreet("TestStreet")
+                .withPostcode("TestCode")
+                .build();
+
+        AddressTo testAddress = addressService.addNewAddress(addressTo);
+
+        //When
+        testAddress.setCity("NewCity");
+        testAddress.setStreet("NewStreet");
+        testAddress.setPostcode("NewPostcode");
+        AddressTo addressById = addressService.updateAddress(testAddress);
+
+        //Then
+        assertEquals(testAddress.getStreet(), addressById.getStreet());
+        assertEquals(testAddress.getCity(), addressById.getCity());
+        assertEquals(testAddress.getPostcode(), addressById.getPostcode());
+    }
 }

@@ -46,6 +46,10 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         return query.getResultList();
     }
 
+    /**
+     * Method returns list of cars which were rented by more than ten different customers
+     * @return list of cars
+     */
     @Override
     public List<CarEntity> findCarsRentedByMoreThan10DifferentCustomers() {
         TypedQuery<CarEntity> query = entityManager.createQuery(
@@ -58,6 +62,13 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         return query.getResultList();
     }
 
+    /**
+     * Method returns list of cars which were rented not later than in given rental date and
+     * returned not sooner than in given return date.
+     * @param rentalDate is a date of renting a car from the rental department
+     * @param returnDate is a date of returning a car to the rental department
+     * @return list of cars
+     */
     @Override
     public List<CarEntity> findCarsRentedInGivenPeriod(Date rentalDate, Date returnDate) {
         TypedQuery<CarEntity> query = entityManager.createQuery(

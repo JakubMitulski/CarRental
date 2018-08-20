@@ -54,6 +54,11 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
         return query.getResultList();
     }
 
+    /**
+     * Method returns list of employees which were searched by one or many criteria params included in param object.
+     * @param criteriaQueryEmployeeTo is storage for car id, name of employee position and name of rental department
+     * @return list of employees
+     */
     @Override
     public List<EmployeeEntity> findEmployeesByCriteria(CriteriaQueryEmployeeTo criteriaQueryEmployeeTo) {
 
