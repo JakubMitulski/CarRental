@@ -378,8 +378,8 @@ public class EmployeeServiceTest {
 
         CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
                 .withCarId(testCar.getId())
-                .withDepartmentId(testDepartment.getId())
-                .withPositionId(testPosition.getId())
+                .withDepartmentName(testDepartment.getName())
+                .withPositionName(testPosition.getName())
                 .build();
 
         //When
@@ -521,7 +521,7 @@ public class EmployeeServiceTest {
         EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
 
         CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
-                .withDepartmentId(testDepartment.getId())
+                .withDepartmentName(testDepartment.getName())
                 .build();
 
         //When
@@ -589,7 +589,7 @@ public class EmployeeServiceTest {
         EmployeeTo testEmployee2 = employeeService.addNewEmployee(employeeTo2);
 
         CriteriaQueryEmployeeTo criteriaQueryEmployeeTo = new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder()
-                .withPositionId(testPosition.getId())
+                .withPositionName(testPosition.getName())
                 .build();
 
         //When

@@ -12,8 +12,8 @@ import lombok.Setter;
 public class CriteriaQueryEmployeeTo {
 
     private Long carId;
-    private Long positionId;
-    private Long departmentId;
+    private String position;
+    private String department;
 
     public static CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder builder() {
         return new CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder();
@@ -21,26 +21,26 @@ public class CriteriaQueryEmployeeTo {
 
     public static class CriteriaQueryEmployeeToBuilder {
         private Long carId;
-        private Long positionId;
-        private Long departmentId;
+        private String position;
+        private String department;
 
         public CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder withCarId(Long carId) {
             this.carId = carId;
             return this;
         }
 
-        public CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder withPositionId(Long positionId) {
-            this.positionId = positionId;
+        public CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder withPositionName(String position) {
+            this.position = position;
             return this;
         }
 
-        public CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder withDepartmentId(Long departmentId) {
-            this.departmentId = departmentId;
+        public CriteriaQueryEmployeeTo.CriteriaQueryEmployeeToBuilder withDepartmentName(String department) {
+            this.department = department;
             return this;
         }
 
         public CriteriaQueryEmployeeTo build() {
-            return new CriteriaQueryEmployeeTo(carId, positionId, departmentId);
+            return new CriteriaQueryEmployeeTo(carId, position, department);
         }
     }
 }

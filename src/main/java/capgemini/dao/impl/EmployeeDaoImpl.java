@@ -70,28 +70,28 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
             canAppendQueryByWhere = true;
         }
 
-        Long positionId = criteriaQueryEmployeeTo.getPositionId();
-        if (positionId != null) {
+        String position = criteriaQueryEmployeeTo.getPosition();
+        if (position != null) {
             if (canAppendQueryByWhere) {
                 queryBuilder.append(" where ");
             }
             if (canAppendQueryByAnd) {
                 queryBuilder.append(" and ");
             }
-            queryBuilder.append("e.positionEntity.id = :positionId");
+            queryBuilder.append("e.positionEntity.name = :position");
             canAppendQueryByAnd = true;
             canAppendQueryByWhere = false;
         }
 
-        Long departmentId = criteriaQueryEmployeeTo.getDepartmentId();
-        if (departmentId != null) {
+        String department = criteriaQueryEmployeeTo.getDepartment();
+        if (department != null) {
             if (canAppendQueryByWhere) {
                 queryBuilder.append(" where ");
             }
             if (canAppendQueryByAnd) {
                 queryBuilder.append(" and ");
             }
-            queryBuilder.append("e.departmentEntity.id = :deptId");
+            queryBuilder.append("e.departmentEntity.name = :dept");
         }
 
         TypedQuery<EmployeeEntity> query = entityManager.createQuery(queryBuilder.toString(), EmployeeEntity.class);
@@ -99,11 +99,11 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
         if (carId != null) {
             query.setParameter("carId", criteriaQueryEmployeeTo.getCarId());
         }
-        if (positionId != null) {
-            query.setParameter("positionId", criteriaQueryEmployeeTo.getPositionId());
+        if (position != null) {
+            query.setParameter("position", criteriaQueryEmployeeTo.getPosition());
         }
-        if (departmentId != null) {
-            query.setParameter("deptId", criteriaQueryEmployeeTo.getDepartmentId());
+        if (department != null) {
+            query.setParameter("dept", criteriaQueryEmployeeTo.getDepartment());
         }
 
         return query.getResultList();
