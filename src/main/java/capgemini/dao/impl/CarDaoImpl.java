@@ -25,7 +25,7 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
         query.setParameter("employeeId", employeeEntity.getId());
         EmployeeEntity employee = query.getSingleResult();
 
-        employee.addCar(carEntity);
+        employee.getCars().add(carEntity);
         entityManager.merge(employee);
     }
 

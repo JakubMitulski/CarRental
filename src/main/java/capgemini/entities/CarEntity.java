@@ -38,7 +38,4 @@ public class CarEntity implements Serializable {
     @OneToMany(mappedBy = "carEntity", cascade = CascadeType.REMOVE)
     private Collection<HistoryEntity> historyEntities = new HashSet<>();
 
-    public void addHistoryEntry(HistoryEntity historyEntity){
-        this.historyEntities.add(historyEntity);
-    }
 }

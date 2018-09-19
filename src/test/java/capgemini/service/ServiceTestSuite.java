@@ -13,7 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
         DepartmentServiceTest.class,
         EmployeeServiceTest.class,
         HistoryServiceTest.class,
-        PositionServiceTest.class})
+        PositionServiceTest.class,
+        AddressServiceTest.class})
 public class ServiceTestSuite {
 
 }

@@ -57,10 +57,10 @@ public class HistoryServiceImpl implements HistoryService {
 
         HistoryEntity savedHistoryEntity = historyRepository.save(historyEntity);
 
-        carEntity.addHistoryEntry(savedHistoryEntity);
-        customerEntity.addHistoryEntry(savedHistoryEntity);
-        rentalDepartmentEntity.addRentalHistoryEntry(savedHistoryEntity);
-        returnDepartmentEntity.addReturnHistoryEntry(savedHistoryEntity);
+        carEntity.getHistoryEntities().add(savedHistoryEntity);
+        customerEntity.getHistoryEntities().add(savedHistoryEntity);
+        rentalDepartmentEntity.getRentalHistoryEntities().add(savedHistoryEntity);
+        returnDepartmentEntity.getReturnHistoryEntities().add(savedHistoryEntity);
 
         return HistoryMapper.toHistoryTo(savedHistoryEntity);
     }

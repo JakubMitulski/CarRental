@@ -44,7 +44,4 @@ public class EmployeeEntity implements Serializable {
     )
     private Set<CarEntity> cars = new HashSet<>();
 
-    public void addCar(CarEntity carEntity) {
-        this.cars.add(carEntity);
-    }
 }

@@ -32,11 +32,4 @@ public class DepartmentEntity implements Serializable {
     @OneToMany(mappedBy = "returnDepartmentEntity", cascade = CascadeType.REMOVE)
     private Collection<HistoryEntity> returnHistoryEntities = new HashSet<>();
 
-    public void addRentalHistoryEntry(HistoryEntity historyEntity){
-        this.rentalHistoryEntities.add(historyEntity);
-    }
-
-    public void addReturnHistoryEntry(HistoryEntity historyEntity){
-        this.returnHistoryEntities.add(historyEntity);
-    }
 }
